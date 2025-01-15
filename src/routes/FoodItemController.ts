@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { FoodCategoryService } from "../services/FoodCategoryService";
+import { FoodItemService } from "../services/FoodItemService";
 
-export class FoodCategoryController {
+export class FoodItemController {
     private router: Router = Router();
 
-    private service = new FoodCategoryService();
+    private service = new FoodItemService();
 
     getRouter() {
         this.router.post("/create", async (req: any, res: any) => {
@@ -19,7 +19,6 @@ export class FoodCategoryController {
                 res.send({ status: 0, error: error });
             }
         });
-
         return this.router;
     }
 }

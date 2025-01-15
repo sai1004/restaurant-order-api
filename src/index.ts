@@ -1,6 +1,8 @@
 import { createConnection } from "typeorm";
 import * as config from "./config/Config";
 import { FoodCategoryController } from "./routes/FoodCategoryController";
+import { FoodItemController } from "./routes/FoodItemController";
+import { FoodItemService } from "./services/FoodItemService";
 
 const express = require("express");
 const app = express();
@@ -19,6 +21,7 @@ const startServer = async () => {
 
         if (db.isConnected) {
             let foodCategoryRoutes = new FoodCategoryController();
+            let foodItemRoutes = new FoodItemController();
 
             app.use(express.urlencoded({ extended: false }));
             app.use(cors());
@@ -31,6 +34,7 @@ const startServer = async () => {
             });
 
             app.use("/api/category", foodCategoryRoutes.getRouter());
+            app.use("/api/item", foodItemRoutes.getRouter());
 
             app.listen(port, (err: Error) => {
                 if (!err) {

@@ -1,20 +1,20 @@
-import { FoodCategoryDAO } from "../daos/FoodCategoryDAO";
-import { FoodCategory } from "../entities/FoodCategory";
+import { FoodItemDAO } from "../daos/FoodItemDAO";
+import { FoodItem } from "../entities/FoodItem";
 import { v4 as uuidv4 } from "uuid";
 
-export class FoodCategoryService {
-    private dao: FoodCategoryDAO;
+export class FoodItemService {
+    private dao: FoodItemDAO;
 
     constructor() {
-        this.dao = new FoodCategoryDAO();
+        this.dao = new FoodItemDAO();
     }
 
-    async save(data: FoodCategory) {
+    async save(data: FoodItem) {
         try {
             let isValid = await this.validator(data);
 
             if (isValid) {
-                let foodCategoryData = this.dao.save(data);
+                let foodItemData = this.dao.save(data);
                 let returnData = {
                     id: data.id,
                     name: data.name,
@@ -30,7 +30,16 @@ export class FoodCategoryService {
         }
     }
 
-    async validator(item: FoodCategory) {
+    async getItems(items: FoodItem) {
+        try {
+            let foodItemData = await this.dao.findAll(items);
+            return foodItemData;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async validator(item: FoodItem) {
         if (!item.id || item.id == "" || item.id == "0") {
             let uid = uuidv4();
             item.id = uid;

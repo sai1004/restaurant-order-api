@@ -1,14 +1,14 @@
-import { FoodCategory } from "../entities/FoodCategory";
-import { Repository, getRepository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
+import { FoodItem } from "../entities/FoodItem";
 
-export class FoodCategoryDAO {
-    private dao: Repository<FoodCategory>;
+export class FoodItemDAO {
+    private dao: Repository<FoodItem>;
 
     constructor() {
-        this.dao = getRepository(FoodCategory);
+        this.dao = getRepository(FoodItem);
     }
 
-    async save(data: FoodCategory) {
+    async save(data: FoodItem) {
         return await this.dao.save(data);
     }
 
@@ -24,7 +24,7 @@ export class FoodCategoryDAO {
         return await this.dao.findOne(id);
     }
 
-    async delete(data: FoodCategory) {
+    async delete(data: FoodItem) {
         return await this.dao.remove(data);
     }
 }
