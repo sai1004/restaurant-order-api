@@ -17,11 +17,11 @@ const port = process.env.PORT || 3500;
 
 const startServer = async () => {
     try {
-        let db = await createConnection(config.dbConfig);
+        // let db = await createConnection(config.dbConfig);
 
-        if (db.isConnected) {
-            let foodCategoryRoutes = new FoodCategoryController();
-            let foodItemRoutes = new FoodItemController();
+        // if (db.isConnected) {
+            // let foodCategoryRoutes = new FoodCategoryController();
+            // let foodItemRoutes = new FoodItemController();
 
             app.use(express.urlencoded({ extended: false }));
             app.use(cors());
@@ -33,8 +33,8 @@ const startServer = async () => {
                 res.send({ message: "Hello App Works!!" });
             });
 
-            app.use("/api/category", foodCategoryRoutes.getRouter());
-            app.use("/api/item", foodItemRoutes.getRouter());
+            // app.use("/api/category", foodCategoryRoutes.getRouter());
+            // app.use("/api/item", foodItemRoutes.getRouter());
 
             app.listen(port, (err: Error) => {
                 if (!err) {
@@ -45,7 +45,7 @@ const startServer = async () => {
                     `);
                 }
             });
-        }
+        // }
     } catch (error) {
         console.log(`Error: error while starting the server ${error}`);
     }
