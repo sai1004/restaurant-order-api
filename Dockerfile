@@ -3,7 +3,6 @@ FROM node:18-alpine
 
 # create a working directory in container
 # WORKDIR /the/workdir/path
-
 WORKDIR /app
 
 # Copy app sorce code into container
