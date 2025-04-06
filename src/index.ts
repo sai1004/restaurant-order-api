@@ -1,53 +1,61 @@
-import { createConnection } from "typeorm";
-import * as config from "./config/Config";
-import { FoodCategoryController } from "./routes/FoodCategoryController";
-import { FoodItemController } from "./routes/FoodItemController";
-import { FoodItemService } from "./services/FoodItemService";
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import logger from "morgan";
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
+import * as Config from "./config/Config";
 
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const uuid = require("uuid");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const morgan = require("morgan");
 dotenv.config();
-
-const port = process.env.PORT || 3500;
+const app = express();
+const PORT = process.env.PORT || 3500;
+const swaggerDocument = YAML.load("./swagger.yaml");
+import { Request, Response, NextFunction } from "express";
+import { Server } from "http";
+import { DataSource } from "typeorm";
 
 const startServer = async () => {
     try {
-        // let db = await createConnection(config.dbConfig);
+        const dataSource: DataSource = await Config.AppDataSource.initialize();
 
-        // if (db.isConnected) {
-            // let foodCategoryRoutes = new FoodCategoryController();
-            // let foodItemRoutes = new FoodItemController();
-
+        if (dataSource) {
+            app.use(express.json());
             app.use(express.urlencoded({ extended: false }));
             app.use(cors());
-            app.use(bodyParser.json());
-            app.use(bodyParser.urlencoded({ extended: false }));
-            app.use(morgan("dev"));
+            app.use(logger("dev"));
 
-            app.get("/api", (req: any, res: any) => {
-                res.send({ message: "Hello App Works!!" });
+            app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+            app.get("/api", (req: Request, res: Response) => {
+                res.json({ message: "Hello App Works!!" });
             });
 
-            // app.use("/api/category", foodCategoryRoutes.getRouter());
-            // app.use("/api/item", foodItemRoutes.getRouter());
-
-            app.listen(port, (err: Error) => {
-                if (!err) {
-                    console.log(`
-                    ********************************
-                    server is listening on port ${port}
-                    ********************************
-                    `);
-                }
+            const server: Server = app.listen(PORT, () => {
+                console.log(`🚀 Server running at http://localhost:${PORT}/api`);
+                console.log(`📚 Swagger docs at http://localhost:${PORT}/api-docs`);
             });
-        // }
+
+            // Graceful shutdown
+            const shutdown = async () => {
+                console.log("🔻 Shutting down server...");
+                server.close(() => {
+                    console.log("✅ HTTP server closed");
+                    process.exit(0);
+                });
+            };
+
+            process.on("unhandledRejection", (reason) => {
+                console.error("Unhandled Rejection:", reason);
+                shutdown();
+            });
+
+            process.on("uncaughtException", (err) => {
+                console.error("Uncaught Exception:", err);
+                shutdown();
+            });
+        }
     } catch (error) {
-        console.log(`Error: error while starting the server ${error}`);
+        console.error("❌ Error starting the server:", error);
     }
 };
 
