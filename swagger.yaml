@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: Todo-App-Api
+  description: This provides api's related to Todo-App-Api.
+  version: 1.0.0
+servers:
+# - url: https://xyz.dev.csp-shared-services-dev.aws.xyz.com/api/v1
+#   description: Dev Server
+- url: http://localhost:3500/api
+  description: Local Server
+tags:
+- name: Todo
+  description: Todo API
+paths:
+  /fooditems:
+    get:
+      tags:
+      - Todo
+      summary: Returns Todo List.
+      description: Return the Todo details by calling Todo Api.
+      responses:
+        "200":
+          # status code
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/defaultSuccessResponseSchema"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/defaultBadResponseSchema"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/defaultNotFoundResponseSchema"
+        "401":
+          description: Facets Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/defaultUnauthorizedResponseSchema"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#components/schemas/defaultServerErrorResponseSchema"
+                - $ref: "#components/schemas/defaultApplicationErrorResponseSchema"
+      # security:
+      #   - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+  schemas:
+    defaultBadResponseSchema:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            outcome:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: 400
+                code:
+                  type: string
+                  example: 10004
+                message:
+                  type: string
+                  example: Request validation is failed
+                errorReasons:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: requestType is required
+                      path:
+                        type: string
+                        example: requestType
+                      type:
+                        type: string
+                        example: string
+    defaultNotFoundResponseSchema:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            outcome:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: 404
+                code:
+                  type: string
+                  example: 10008
+                message:
+                  type: string
+                  example: No Records Found
+                errorReasons:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: No Records found
+                      path:
+                        type: string
+                        example: requestType
+                      type:
+                        type: string
+                        example: string

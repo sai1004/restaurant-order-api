@@ -5,30 +5,73 @@ import logger from "morgan";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import * as Config from "./config/Config";
+import helmet from "helmet";
+import { Request, Response } from "express";
+import { Server } from "http";
+import { DataSource } from "typeorm";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3500;
 const swaggerDocument = YAML.load("./swagger.yaml");
-import { Request, Response, NextFunction } from "express";
-import { Server } from "http";
-import { DataSource } from "typeorm";
+
+import { FoodItemController } from "./controllers/FoodItemController";
 
 const startServer = async () => {
     try {
         const dataSource: DataSource = await Config.AppDataSource.initialize();
 
         if (dataSource) {
+            const foodItemRouter = new FoodItemController();
+
             app.use(express.json());
             app.use(express.urlencoded({ extended: false }));
-            app.use(cors());
-            app.use(logger("dev"));
 
-            app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+            app.use(
+                helmet({
+                    contentSecurityPolicy: {
+                        directives: {
+                            defaultSrc: ["'none'"],
+                            imgSrc: ["'self'"],
+                            scriptSrc: ["'self'"],
+                            styleSrc: ["'self'"],
+                            objectSrc: ["'none'"],
+                        },
+                    },
+                    frameguard: { action: "sameorigin" }, // x-frame-options
+                    hsts: {
+                        maxAge: 63072000, // 2 years in seconds
+                        includeSubDomains: true,
+                        preload: true,
+                    },
+                    xssFilter: true,
+                    noSniff: true,
+                    referrerPolicy: { policy: "no-referrer" }, // safer alternative
+                })
+            );
+
+            app.use(
+                cors({
+                    origin: "*",
+                    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+                    allowedHeaders: "*",
+                })
+            );
+            app.use(logger("common"));
+
+            let options = {
+                swaggerOptions: {
+                    tagsSorter: "alpha",
+                },
+            };
+
+            app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
             app.get("/api", (req: Request, res: Response) => {
                 res.json({ message: "Hello App Works!!" });
             });
+
+            app.use("/api/food", foodItemRouter.getRouter());
 
             const server: Server = app.listen(PORT, () => {
                 console.log(`🚀 Server running at http://localhost:${PORT}/api`);
@@ -54,7 +97,7 @@ const startServer = async () => {
                 shutdown();
             });
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error("❌ Error starting the server:", error);
     }
 };

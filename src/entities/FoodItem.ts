@@ -17,6 +17,9 @@ export class FoodItem {
     @Column({ name: "summary" })
     summary: string = "";
 
+    @Column({ name: "type" })
+    type: string = "";
+
     @Column({ name: "in_stock" })
     inStock: number = 0;
 

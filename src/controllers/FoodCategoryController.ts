@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { FoodCategoryService } from "../services/FoodCategoryService";
+import { Request, Response, NextFunction } from "express";
 
 export class FoodCategoryController {
     private router: Router = Router();
@@ -7,7 +8,7 @@ export class FoodCategoryController {
     private service = new FoodCategoryService();
 
     getRouter() {
-        this.router.post("/create", async (req: any, res: any) => {
+        this.router.post("/create", async (req: Request, res: Response) => {
             try {
                 let reqData = req.body ? req.body : {};
                 let result = null;

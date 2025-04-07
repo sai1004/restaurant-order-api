@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { FoodItemService } from "../services/FoodItemService";
+import { Request, Response, NextFunction } from "express";
 
 export class FoodItemController {
     private router: Router = Router();
@@ -7,16 +8,42 @@ export class FoodItemController {
     private service = new FoodItemService();
 
     getRouter() {
-        this.router.post("/create", async (req: any, res: any) => {
+        this.router.get("/items", async (req: Request, res: Response) => {
+            try {
+                let reqData: any;
+                reqData = req.query ? req.query : {};
+                let result = null;
+                result = await this.service.getItems(reqData);
+                res.send({ status: 1, data: result });
+            } catch (error: any) {
+                console.log(error);
+                res.send({ status: 0, error: error?.message });
+            }
+        });
+
+        this.router.get("/items/:id", async (req: Request, res: Response) => {
+            try {
+                let reqData: any;
+                reqData = req.params.id;
+                let result = null;
+                result = await this.service.getItemsById(reqData);
+                res.send({ status: 1, data: result });
+            } catch (error: any) {
+                console.log(error);
+                res.send({ status: 0, error: error?.message });
+            }
+        });
+
+        this.router.post("/items", async (req: Request, res: Response) => {
             try {
                 let reqData = req.body ? req.body : {};
                 let result = null;
                 console.log("reqData", req.body);
                 result = await this.service.save(reqData);
                 res.send({ status: 1, data: result });
-            } catch (error) {
+            } catch (error: any) {
                 console.log(error);
-                res.send({ status: 0, error: error });
+                res.send({ status: 0, error: error?.message });
             }
         });
         return this.router;

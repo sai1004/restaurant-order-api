@@ -1,11 +1,12 @@
-import { getRepository, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { FoodItem } from "../entities/FoodItem";
+import { AppDataSource } from "../config/Config";
 
 export class FoodItemDAO {
     private dao: Repository<FoodItem>;
 
     constructor() {
-        this.dao = getRepository(FoodItem);
+        this.dao = AppDataSource.getRepository(FoodItem);
     }
 
     async save(data: FoodItem) {
@@ -21,7 +22,7 @@ export class FoodItemDAO {
     }
 
     async findById(id: any) {
-        return await this.dao.findOne(id);
+        return await this.dao.findOneBy({ id: id });
     }
 
     async delete(data: FoodItem) {

@@ -1,11 +1,12 @@
 import { FoodCategory } from "../entities/FoodCategory";
-import { Repository, getRepository } from "typeorm";
+import { Repository } from "typeorm";
+import { AppDataSource } from "../config/Config";
 
 export class FoodCategoryDAO {
     private dao: Repository<FoodCategory>;
 
     constructor() {
-        this.dao = getRepository(FoodCategory);
+        this.dao = AppDataSource.getRepository(FoodCategory);
     }
 
     async save(data: FoodCategory) {

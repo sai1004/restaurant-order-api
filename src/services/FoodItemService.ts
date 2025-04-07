@@ -39,6 +39,15 @@ export class FoodItemService {
         }
     }
 
+    async getItemsById(id: string) {
+        try {
+            let foodItemData = await this.dao.findById(id);
+            return foodItemData;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async validator(item: FoodItem) {
         if (!item.id || item.id == "" || item.id == "0") {
             let uid = uuidv4();

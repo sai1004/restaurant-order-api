@@ -110,7 +110,7 @@ create table dining_table (
 
 
 
--- 🍽️ Sample Inserts: food_category
+-- Sample Inserts: food_category
 
 insert into food_order_db.food_category (id, name, summary)
 values
@@ -120,7 +120,7 @@ values
 ('cat004', 'Beverages', 'Hot and cold drinks');
 
 
--- 🍲 Sample Inserts: food_item
+-- Sample Inserts: food_item
 
 insert into food_order_db.food_item (id, name, title, sub_title, summary, type, in_stock, price, food_category_id) values
 ('food001', 'Paneer Tikka', 'Grilled Paneer Tikka', 'Spicy & Grilled', 'Soft cottage cheese grilled with spices', 'veg', 10, 220.00, 'cat001'),
@@ -129,7 +129,7 @@ insert into food_order_db.food_item (id, name, title, sub_title, summary, type, 
 ('food004', 'Masala Chai', 'Indian Tea', 'Hot Beverage', 'Strong tea with spices and milk', 'veg', 15, 40.00, 'cat004');
 
 
--- 🛒 Sample Inserts: cart and cart_items
+-- Sample Inserts: cart and cart_items
 
 insert into food_order_db.cart (id, created_by)
 values ('cart001', 'user001');
@@ -140,13 +140,13 @@ values
 ('ci002', 'cart001', 'food003', 1);
 
 
--- 📋 Sample Insert: orders
+-- Sample Insert: orders
 
 insert into food_order_db.orders (id, type, table_no, customer_name, mobile, persons_in_table, cart_id, created_by)
 values ('order001', 'dinein', 5, 'Rahul Sharma', '9876543210', 2, 'cart001', 'user001');
 
 
--- 💰 Sample Insert: payment
+-- Sample Insert: payment
 
 insert into food_order_db.payment (id, order_id, discount_percent, discount_price, sub_total, grand_total, payment_type, payment_status, paid_on)
 values (
@@ -154,7 +154,7 @@ values (
 );
 
 
--- 🪑 Optional Insert: dining_table
+-- Sample Insert: dining_table
 
 insert into food_order_db.dining_table (table_no, capacity, is_occupied)
 values 
@@ -164,6 +164,21 @@ values
 (5, 2, true);
 
 
+-- Sample Insert: img
+
+INSERT INTO food_order_db.img (id, name, src, ref, ref_type, is_secure) VALUES
+('food001', 'Margherita Pizza', 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38', 'pizza001', 'menu_item', true),
+('food002', 'Burger Combo', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd', 'burger001', 'menu_item', false),
+('food003', 'Sushi Platter', 'https://images.unsplash.com/photo-1611143669185-af224c5e3252', 'sushi001', 'menu_item', true),
+('food004', 'Restaurant Logo', 'https://images.unsplash.com/photo-1606787366850-de6330128bfc', 'rest001', 'restaurant', false),
+('food005', 'Pasta Carbonara', 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb', 'pasta001', 'menu_item', false),
+('food006', 'Chef Profile', 'https://images.unsplash.com/photo-1600566752355-35792bedcfea', 'chef001', 'staff', true),
+('food007', 'Dining Area', 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4', 'rest002', 'restaurant', false),
+('food008', 'Chocolate Cake', 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e', 'dessert001', 'menu_item', true),
+('food009', 'Coffee Art', 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5', 'beverage001', 'menu_item', false),
+('food010', 'Salad Bowl', 'https://images.unsplash.com/photo-1546793665-c74683f339c1', 'salad001', 'menu_item', false),
+('food011', 'Food Delivery', 'https://images.unsplash.com/photo-1601050690597-df0568f70950', 'delivery001', 'service', true),
+('food012', 'Breakfast Platter', 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e', 'breakfast001', 'menu_item', false);
 
 
 
