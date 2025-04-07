@@ -17,4 +17,4 @@ RUN npm install
 CMD ["npm","start"]
 
 # Expose Container Port
-EXPOSE 5000
+EXPOSE 3500

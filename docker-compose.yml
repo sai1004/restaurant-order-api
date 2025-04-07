@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3500:3500"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=Admin!23
+      - DB_NAME=food_order_db
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - app-network
+    restart: on-failure
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=Admin!23
+      - MYSQL_DATABASE=food_order_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    networks:
+      - app-network
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:
+    driver: bridge

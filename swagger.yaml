@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Todo-App-Api
-  description: This provides api's related to Todo-App-Api.
+  title: Restaurant Order API
+  description: This provides api's related to Restaurant Order API.
   version: 1.0.0
 servers:
 # - url: https://xyz.dev.csp-shared-services-dev.aws.xyz.com/api/v1
@@ -9,15 +9,15 @@ servers:
 - url: http://localhost:3500/api
   description: Local Server
 tags:
-- name: Todo
-  description: Todo API
+- name: FoodItems
+  description: FoodItems API
 paths:
   /fooditems:
     get:
       tags:
-      - Todo
-      summary: Returns Todo List.
-      description: Return the Todo details by calling Todo Api.
+      - FoodItems
+      summary: Returns FoodItems List.
+      description: Return the FoodItems details by calling FoodItems Api.
       responses:
         "200":
           # status code
