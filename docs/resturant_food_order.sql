@@ -20,8 +20,9 @@ create table food_item (
     id varchar(245) primary key not null,
     name varchar(199) not null,
     title varchar(199),
-    sub_title text,
+    sub_title varchar(99),
     summary text,
+    type enum('veg', 'non-veg') not null, 
     in_stock smallint(255) not null,
     price decimal(19, 2) not null,
     img_id varchar(199),
@@ -33,7 +34,7 @@ create table food_item (
     updated_on timestamp not null default now()
 );
 
--- dish of the day, deserts, starters, veg, non-veg
+-- dish of the day, deserts, starters, coffee, etc
 create table food_category (
     id varchar(245) primary key not null,
     name varchar(199) not null,
