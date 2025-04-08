@@ -1,6 +1,5 @@
 import { FoodItemDAO } from "../daos/FoodItemDAO";
 import { FoodItem } from "../entities/FoodItem";
-import { v4 as uuidv4 } from "uuid";
 
 export class FoodItemService {
     private dao: FoodItemDAO;
@@ -14,7 +13,7 @@ export class FoodItemService {
             let isValid = await this.validator(data);
 
             if (isValid) {
-                let foodItemData = this.dao.save(data);
+                let foodItem = this.dao.save(data);
                 let returnData = {
                     id: data.id,
                     name: data.name,
@@ -32,8 +31,8 @@ export class FoodItemService {
 
     async getItems(items: FoodItem) {
         try {
-            let foodItemData = await this.dao.findAll(items);
-            return foodItemData;
+            let foodItems = await this.dao.findAll(items);
+            return foodItems;
         } catch (error) {
             throw error;
         }
@@ -41,8 +40,8 @@ export class FoodItemService {
 
     async getItemsById(id: string) {
         try {
-            let foodItemData = await this.dao.findById(id);
-            return foodItemData;
+            let foodItem = await this.dao.findById(id);
+            return foodItem;
         } catch (error) {
             throw error;
         }
@@ -50,8 +49,8 @@ export class FoodItemService {
 
     async validator(item: FoodItem) {
         if (!item.id || item.id == "" || item.id == "0") {
-            let uid = uuidv4();
-            item.id = uid;
+            let uid = Date.now();
+            item.id = String(uid);
         }
         return true;
     }

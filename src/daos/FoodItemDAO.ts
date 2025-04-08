@@ -9,16 +9,12 @@ export class FoodItemDAO {
         this.dao = AppDataSource.getRepository(FoodItem);
     }
 
-    async save(data: FoodItem) {
-        return await this.dao.save(data);
+    async save(foodItem: FoodItem) {
+        return await this.dao.save(foodItem);
     }
 
-    async findAll(data: any) {
-        return await this.dao.find(data);
-    }
-
-    async findOne(data: any) {
-        return await this.dao.findOne(data);
+    async findAll(foodItems: any) {
+        return await this.dao.find(foodItems);
     }
 
     async findById(id: any) {
