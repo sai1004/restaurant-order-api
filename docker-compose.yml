@@ -3,6 +3,7 @@ version: '3.8'
 services:
   app:
     build: .
+    image: sai1004/restaurant-order-api 
     ports:
       - "3500:3500"
     environment:
