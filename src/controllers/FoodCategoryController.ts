@@ -8,14 +8,14 @@ export class FoodCategoryController {
     private service = new FoodCategoryService();
 
     getRouter() {
-        this.router.post("/create", async (req: Request, res: Response) => {
+        this.router.post("/category", async (req: Request, res: Response) => {
             try {
                 let reqData = req.body ? req.body : {};
                 let result = null;
                 console.log("reqData", req.body);
                 result = await this.service.save(reqData);
                 res.send({ status: 1, data: result });
-            } catch (error) {
+            } catch (error: any) {
                 console.log(error);
                 res.send({ status: 0, error: error });
             }

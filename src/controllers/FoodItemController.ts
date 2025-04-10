@@ -13,7 +13,7 @@ export class FoodItemController {
                 let reqData: any;
                 reqData = req.query ? req.query : {};
                 let result = null;
-                result = await this.service.getItems(reqData);
+                result = await this.service.getAllItem(reqData);
                 res.send({ status: 1, data: result });
             } catch (error: any) {
                 console.log(error);
@@ -26,7 +26,7 @@ export class FoodItemController {
                 let reqData: any;
                 reqData = req.params.id;
                 let result = null;
-                result = await this.service.getItemsById(reqData);
+                result = await this.service.getItemById(reqData);
                 res.send({ status: 1, data: result });
             } catch (error: any) {
                 console.log(error);

@@ -13,36 +13,36 @@ export class FoodItemService {
             let isValid = await this.validator(data);
 
             if (isValid) {
-                let foodItem = this.dao.save(data);
+                await this.dao.save(data);
                 let returnData = {
-                    id: data.id,
-                    name: data.name,
+                    id: data?.id,
+                    name: data?.name,
                     message: "Saved Successfully!!",
                 };
                 return returnData;
             } else {
-                let returnData = { message: "Please enter valid data" };
+                const returnData = { message: "Please enter valid data" };
                 throw returnData;
             }
-        } catch (error) {
+        } catch (error: any) {
             throw error;
         }
     }
 
-    async getItems(items: FoodItem) {
+    async getAllItem(item: FoodItem) {
         try {
-            let foodItems = await this.dao.findAll(items);
+            let foodItems = await this.dao.findAll(item);
             return foodItems;
-        } catch (error) {
+        } catch (error: any) {
             throw error;
         }
     }
 
-    async getItemsById(id: string) {
+    async getItemById(id: string) {
         try {
             let foodItem = await this.dao.findById(id);
             return foodItem;
-        } catch (error) {
+        } catch (error: any) {
             throw error;
         }
     }

@@ -1,6 +1,5 @@
 import { FoodCategoryDAO } from "../daos/FoodCategoryDAO";
 import { FoodCategory } from "../entities/FoodCategory";
-import { v4 as uuidv4 } from "uuid";
 
 export class FoodCategoryService {
     private dao: FoodCategoryDAO;
@@ -14,7 +13,7 @@ export class FoodCategoryService {
             let isValid = await this.validator(data);
 
             if (isValid) {
-                let foodCategoryData = this.dao.save(data);
+                let foodCategory = await this.dao.save(data);
                 let returnData = {
                     id: data.id,
                     name: data.name,
@@ -25,15 +24,15 @@ export class FoodCategoryService {
                 let returnData = { message: "Please enter valid data" };
                 throw returnData;
             }
-        } catch (error) {
+        } catch (error: any) {
             throw error;
         }
     }
 
     async validator(item: FoodCategory) {
         if (!item.id || item.id == "" || item.id == "0") {
-            let uid = uuidv4();
-            item.id = uid;
+            let uid = Date.now();
+            item.id = String(uid);
         }
         return true;
     }

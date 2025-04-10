@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
 import logger from "morgan";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
@@ -10,7 +11,6 @@ import { Request, Response } from "express";
 import { Server } from "http";
 import { DataSource } from "typeorm";
 
-dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3500;
 const swaggerDocument = YAML.load("./swagger.yaml");

@@ -12,7 +12,7 @@ tags:
 - name: FoodItems
   description: FoodItems API
 paths:
-  /fooditems:
+  /food/items:
     get:
       tags:
       - FoodItems

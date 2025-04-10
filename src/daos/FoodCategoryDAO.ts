@@ -17,10 +17,6 @@ export class FoodCategoryDAO {
         return await this.dao.find(data);
     }
 
-    async findOne(data: any) {
-        return await this.dao.findOne(data);
-    }
-
     async findById(id: any) {
         return await this.dao.findOne(id);
     }
