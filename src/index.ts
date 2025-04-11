@@ -29,15 +29,15 @@ const startServer = async () => {
 
             app.use(
                 helmet({
-                    contentSecurityPolicy: {
-                        directives: {
-                            defaultSrc: ["'none'"],
-                            imgSrc: ["'self'"],
-                            scriptSrc: ["'self'"],
-                            styleSrc: ["'self'"],
-                            objectSrc: ["'none'"],
-                        },
-                    },
+                    // contentSecurityPolicy: { // csp
+                    //     directives: {
+                    //         defaultSrc: ["'none'"],
+                    //         imgSrc: ["'self'"],
+                    //         scriptSrc: ["'self'"],
+                    //         styleSrc: ["'self'"],
+                    //         objectSrc: ["'none'"],
+                    //     },
+                    // },
                     frameguard: { action: "sameorigin" }, // x-frame-options
                     hsts: {
                         maxAge: 63072000, // 2 years in seconds
@@ -62,7 +62,7 @@ const startServer = async () => {
             let options = {
                 swaggerOptions: {
                     tagsSorter: "alpha",
-                },
+                }
             };
 
             app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
