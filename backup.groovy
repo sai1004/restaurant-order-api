@@ -1,4 +1,3 @@
-/* groovylint-disable DuplicateStringLiteral, NoDef, VariableTypeRequired */
 pipeline {
     agent any
 

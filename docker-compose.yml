@@ -1,48 +1,68 @@
+# Specify Docker Compose file version (3.8 supports modern features)
 version: '3.8'
 
+# Define the services/containers that make up the application
 services:
+  # Main application service (Node.js API)
   app:
+    # Build the image using the Dockerfile in current directory
     build: .
+    # Name the resulting image for potential pushing to a registry
     image: sai1004/restaurant-order-api 
+    # Map host port 3500 to container port 3500
     ports:
       - "3500:3500"
+    # Set environment variables for the application
     environment:
-      - NODE_ENV=development
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_USERNAME=root
-      - DB_PASSWORD=Admin!23
-      - DB_NAME=food_order_db
+      - NODE_ENV=development          # Node environment
+      - DB_HOST=mysql                 # Database host (service name)
+      - DB_PORT=3306                  # Database port
+      - DB_USERNAME=root              # Database username
+      - DB_PASSWORD=Admin!23          # Database password
+      - DB_NAME=food_order_db         # Database name
+    # Ensure MySQL is healthy before starting
     depends_on:
       mysql:
         condition: service_healthy
+    # Mount volumes for development (host files + isolated node_modules)
     volumes:
-      - ./:/app
-      - /app/node_modules
+      - ./:/app                       # Mount current dir to /app in container
+      - /app/node_modules             # Keep node_modules isolated
+    # Connect to app-network
     networks:
       - app-network
+    # Automatically restart if app crashes
     restart: on-failure
 
+  # MySQL database service
   mysql:
+    # Use official MySQL 8.0 image
     image: mysql:8.0
+    # Set MySQL environment variables
     environment:
-      - MYSQL_ROOT_PASSWORD=Admin!23
-      - MYSQL_DATABASE=food_order_db
+      - MYSQL_ROOT_PASSWORD=Admin!23  # Root password
+      - MYSQL_DATABASE=food_order_db  # Default database to create
+    # Persist data using named volume
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql     # Store data in volume
+    # Health check to verify MySQL is ready
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
-      interval: 5s
-      timeout: 10s
-      retries: 10
+      interval: 5s     # Check every 5 seconds
+      timeout: 10s     # Timeout after 10 seconds
+      retries: 10      # Retry up to 10 times
+    # Connect to app-network
     networks:
       - app-network
+    # Expose MySQL port to host (optional, only needed for external access)
     ports:
       - "3306:3306"
 
+# Define volumes for data persistence
 volumes:
-  mysql-data:
+  mysql-data:  # Named volume for MySQL data storage
 
+# Define networks for container communication
 networks:
   app-network:
-    driver: bridge
+    driver: bridge  # Use bridge networking (default)
