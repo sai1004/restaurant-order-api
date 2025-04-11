@@ -10,6 +10,6 @@ export const AppDataSource = new DataSource({
     password: process.env.DB_PASSWORD || "Admin!23",
     database: process.env.DB_NAME || "food_order_db",
     logging: true,
-    synchronize: false,
+    synchronize: true,
     entities: [__dirname + "/../entities/**/*{.ts,.js}"],
 });
