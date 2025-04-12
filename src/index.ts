@@ -29,15 +29,15 @@ const startServer = async () => {
 
             app.use(
                 helmet({
-                    // contentSecurityPolicy: { // csp
-                    //     directives: {
-                    //         defaultSrc: ["'none'"],
-                    //         imgSrc: ["'self'"],
-                    //         scriptSrc: ["'self'"],
-                    //         styleSrc: ["'self'"],
-                    //         objectSrc: ["'none'"],
-                    //     },
-                    // },
+                    contentSecurityPolicy: { // csp
+                        directives: {
+                            defaultSrc: ["'none'"],
+                            imgSrc: ["'self'"],
+                            scriptSrc: ["'self'"],
+                            styleSrc: ["'self'"],
+                            objectSrc: ["'none'"],
+                        },
+                    },
                     frameguard: { action: "sameorigin" }, // x-frame-options
                     hsts: {
                         maxAge: 63072000, // 2 years in seconds
