@@ -6,11 +6,13 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy app sorce code into container
-# COPY source dest
+# COPY /source /dest
 COPY . /app
 
 # Install the dependencies 
 RUN npm install
+
+# Run Test cases
 # RUN npm run test
 
 # Run the code

@@ -15,7 +15,7 @@ services:
     # Set environment variables for the application
     environment:
       - NODE_ENV=development          # Node environment
-      - DB_HOST=mysql                 # Database host (service name)
+      # - DB_HOST=mysql                 # Database host (service name)
       - DB_PORT=3306                  # Database port
       - DB_USERNAME=root              # Database username
       - DB_PASSWORD=Admin!23          # Database password
