@@ -1,5 +1,6 @@
 pipeline {
-    agent any
+    // as master it's security risk
+    agent any 
 
     stages {
         stage('Clone Code') {
