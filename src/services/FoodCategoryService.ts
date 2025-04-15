@@ -29,6 +29,15 @@ export class FoodCategoryService {
         }
     }
 
+    async getAllCategories() {
+        try {
+            let foodCategories = await this.dao.findAll(FoodCategory);
+            return foodCategories;
+        } catch (error: any) {
+            throw error;
+        }
+    }
+
     async validator(item: FoodCategory) {
         if (!item.id || item.id == "" || item.id == "0") {
             let uid = Date.now();

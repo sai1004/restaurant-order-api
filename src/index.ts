@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3500;
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 import { FoodItemController } from "./controllers/FoodItemController";
+import { FoodCategoryController } from "./controllers/FoodCategoryController";
 
 const startServer = async () => {
     try {
@@ -23,6 +24,7 @@ const startServer = async () => {
 
         if (dataSource) {
             const foodItemRouter = new FoodItemController();
+            const foodCategoryRouter = new FoodCategoryController();
 
             app.use(express.json());
             app.use(express.urlencoded({ extended: false }));
@@ -72,6 +74,7 @@ const startServer = async () => {
             });
 
             app.use("/api/food", foodItemRouter.getRouter());
+            app.use("/api/food", foodCategoryRouter.getRouter());
 
             const server: Server = app.listen(PORT, () => {
                 console.log(`🚀 Server running at http://localhost:${PORT}/api`);

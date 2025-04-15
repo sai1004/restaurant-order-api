@@ -17,7 +17,18 @@ export class FoodCategoryController {
                 res.send({ status: 1, data: result });
             } catch (error: any) {
                 console.log(error);
-                res.send({ status: 0, error: error });
+                res.send({ status: 0, error: error?.message });
+            }
+        });
+
+        this.router.get("/category", async (req: Request, res: Response) => {
+            try {
+                let result = null;
+                result = await this.service.getAllCategories();
+                res.send({ status: 1, data: result });
+            } catch (error: any) {
+                console.log(error);
+                res.send({ status: 0, error: error?.message });
             }
         });
 
