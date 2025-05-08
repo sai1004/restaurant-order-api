@@ -23,8 +23,20 @@ export class AuthController {
 
         this.router.post("/signin", async (req: Request, res: Response) => {
             try {
-                let result = null;
-                res.send({ status: 1, data: result });
+                let reqData: any = req.body;
+                let result: any = null;
+
+                if (reqData) {
+                    result = await this.authService.signin(reqData);
+
+                    if (result.access_token) {
+                        res.status(200).send(result);
+                    } else {
+                        res.status(401).send({ status: 0, message: "Invalid Credentials" });
+                    }
+                } else {
+                    res.status(401).send({ status: 0, message: "Invalid Credentials" });
+                }
             } catch (error: any) {
                 console.log(error);
                 res.send({ status: 0, error: error?.message });

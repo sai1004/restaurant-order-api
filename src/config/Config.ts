@@ -4,7 +4,7 @@ import { DataSource } from "typeorm";
 export const AppDataSource = new DataSource({
     name: "default",
     type: "mysql",
-    host: process.env.DB_HOST || "mysql",  // Default to service name
+    host: process.env.DB_HOST || "mysql", // Default to service name
     port: parseInt(process.env.DB_PORT || "3306"),
     username: process.env.DB_USERNAME || "root",
     password: process.env.DB_PASSWORD || "Admin!23",
@@ -13,3 +13,10 @@ export const AppDataSource = new DataSource({
     synchronize: false,
     entities: [__dirname + "/../entities/**/*{.ts,.js}"],
 });
+
+export let baseAuth: any = {
+    user: "RestAdmin",
+    password: "Adm1n0wn",
+};
+
+export let token = "UmVzdEFkbWluOkFkbTFuMHdu";

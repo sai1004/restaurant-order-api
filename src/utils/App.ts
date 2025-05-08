@@ -53,36 +53,14 @@ export class App {
     }
 
     public static EncodeJWT(data: any) {
-        // return jwt.sign(data, Config.token, { expiresIn: "24h" });
+        return jwt.sign(data, Config.token, { expiresIn: "24h" });
     }
 
     public static RefreshJWT(data: any) {
-        // return jwt.sign(data, Config.token, { expiresIn: "24h" });
+        return jwt.sign(data, Config.token, { expiresIn: "24h" });
     }
 
-    public static DecodeJWT(token: any) {
-        // if (token) {
-        //     try {
-        //         let baseAuth: any = new Buffer(token, "base64");
-        //         if (baseAuth && baseAuth.length < 100) {
-        //             baseAuth = baseAuth.toString();
-        //             let [user, password] = baseAuth.split(":");
-        //             if (user && password && user == Config.baseAuth.user && password == Config.baseAuth.password) {
-        //                 return { identity: { id: Config.baseAuth.user, vid: "own", baseAuth: true } };
-        //             } else {
-        //                 return { name: "error", message: "Token is not valid" };
-        //             }
-        //         } else {
-        //             token = token.replace("jwt ", "").replace("JWT ", "");
-        //             return jwt.verify(token, Config.token);
-        //         }
-        //     } catch (err) {
-        //         return { name: "error", message: "Token is not valid" };
-        //     }
-        // } else {
-        //     return { name: "error", message: "Auth token is not supplied" };
-        // }
-    }
+    public static DecodeJWT(token: any) {}
 
     public static ValildateUserAccess(data: any, component: String, access: String, baseAuth?: boolean) {
         if (data) {
@@ -106,7 +84,6 @@ export class App {
 
     public static verifyToken(req: any, res: any, next: any) {
         let token = req.headers.authorization;
-
         let isValidId: any = App.DecodeJWT(token);
 
         if (isValidId.identity) {

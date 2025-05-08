@@ -17,6 +17,10 @@ export class ProfileDAO {
         return await this.dao.findOneBy({ id: id });
     }
 
+    async findOne(data: any) {
+        return await this.dao.findOneBy(data);
+    }
+
     async search(data: any) {
         return await this.dao.createQueryBuilder("profile").orderBy("profile.updatedOn", "DESC").where(data).getMany();
     }
