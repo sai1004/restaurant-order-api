@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { FoodCategoryService } from "../services/FoodCategoryService";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 export class FoodCategoryController {
     private router: Router = Router();

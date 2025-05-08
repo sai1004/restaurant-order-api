@@ -1,10 +1,9 @@
 import { Router } from "express";
 import { FoodItemService } from "../services/FoodItemService";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 export class FoodItemController {
     private router: Router = Router();
-
     private service = new FoodItemService();
 
     getRouter() {

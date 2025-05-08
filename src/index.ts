@@ -17,6 +17,7 @@ const swaggerDocument = YAML.load("./swagger.yaml");
 
 import { FoodItemController } from "./controllers/FoodItemController";
 import { FoodCategoryController } from "./controllers/FoodCategoryController";
+import { AuthController } from "./controllers/AuthController";
 
 const startServer = async () => {
     try {
@@ -25,13 +26,14 @@ const startServer = async () => {
         if (dataSource) {
             const foodItemRouter = new FoodItemController();
             const foodCategoryRouter = new FoodCategoryController();
+            const authControllerRouter = new AuthController();
 
             app.use(express.json());
             app.use(express.urlencoded({ extended: false }));
 
             app.use(
                 helmet({
-                    contentSecurityPolicy: { // csp
+                    contentSecurityPolicy: { // CSP
                         directives: {
                             defaultSrc: ["'none'"],
                             imgSrc: ["'self'"],
@@ -75,6 +77,7 @@ const startServer = async () => {
 
             app.use("/api/food", foodItemRouter.getRouter());
             app.use("/api/food", foodCategoryRouter.getRouter());
+            app.use("/api/auth", authControllerRouter.getRouter());
 
             const server: Server = app.listen(PORT, () => {
                 console.log(`🚀 Server running at http://localhost:${PORT}/api`);

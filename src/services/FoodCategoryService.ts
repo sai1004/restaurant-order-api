@@ -39,7 +39,7 @@ export class FoodCategoryService {
     }
 
     async validator(item: FoodCategory) {
-        if (!item.id || item.id == "" || item.id == "0") {
+        if ([undefined, null, ""].includes(item.id)) {
             let uid = Date.now();
             item.id = String(uid);
         }
