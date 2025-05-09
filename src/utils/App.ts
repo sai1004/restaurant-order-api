@@ -1,13 +1,10 @@
 import { hashSync, compareSync } from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import * as Config from "../config/Config";
+import { Props } from "./Props";
 
 export class App {
     private static uniqueId: number = 0;
-    public static TOKEN_MESSAGE = "Please enter the token.";
-    public static SAVED_SUCCESSFULLY = "Saved Successfully.";
-    public static REMOVED_SUCCESSFULLY = "Removed Successfully.";
-    public static INVALID_DATA = "Please enter valid data.";
     public static NON_ALPHA_NUMARIC = /[^\w\s]/g;
 
     public static UniqueCode(): string {
@@ -83,13 +80,14 @@ export class App {
     }
 
     public static verifyToken(req: any, res: any, next: any) {
-        let token = req.headers.authorization;
-        let isValidId: any = App.DecodeJWT(token);
-
-        if (isValidId.identity) {
+        const token = req.header("Authorization")?.split(" ")[1];
+        if (!token) return res.status(401).json({ status: 0, message: Props.NO_TOKEN_MESSAGE });
+        try {
+            const decoded = jwt.verify(token, Config.token);
+            req.user = decoded;
             next();
-        } else {
-            res.status(403).send({ status: 0, message: "Token is not valid" });
+        } catch {
+            res.status(401).json({ status: 0, message: Props.INVALID_TOKEN });
         }
     }
 }

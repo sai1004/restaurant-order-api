@@ -1,5 +1,6 @@
 import { FoodCategoryDAO } from "../daos/FoodCategoryDAO";
 import { FoodCategory } from "../entities/FoodCategory";
+import { Props } from "../utils/Props";
 
 export class FoodCategoryService {
     private dao: FoodCategoryDAO;
@@ -17,7 +18,7 @@ export class FoodCategoryService {
                 let returnData = {
                     id: data.id,
                     name: data.name,
-                    message: "Saved Successfully!!",
+                    message: Props.SAVED_SUCCESSFULLY,
                 };
                 return returnData;
             } else {

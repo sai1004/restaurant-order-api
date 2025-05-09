@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 const jwt = require("jsonwebtoken");
 
-function authMiddleware(req: Request, res: Response, next: NextFunction) {
+export function authMiddleware(req: Request, res: Response, next: NextFunction) {
     const token = req.header("Authorization")?.split(" ")[1];
     if (!token) return res.status(401).json({ msg: "No token, authorization denied" });
 
@@ -14,5 +14,3 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
         res.status(401).json({ msg: "Token is not valid" });
     }
 }
-
-module.exports({ authMiddleware });
