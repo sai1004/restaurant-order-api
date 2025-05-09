@@ -1,5 +1,6 @@
 import { ProfileDAO } from "../daos/ProfileDAO";
 import { Profile } from "../entities/Profile";
+import { SigninPayload, SigninResponse } from "../types/Auth";
 import { App } from "../utils/App";
 import { ProfileService } from "./ProfileService";
 
@@ -21,24 +22,23 @@ export class AuthService {
         }
     }
 
-    async signin(reqData: any) {
+    async signin(signinPayload: SigninPayload): Promise<SigninResponse | { message: string }> {
         try {
-            let { email, password } = reqData;
+            let { email, password } = signinPayload;
             let profile: Profile | null = await this.dao.findOne({ email: email });
             if (!profile) return { message: "Invalid credentials" };
 
             let isMatch: boolean = App.HashCompareSync(password, profile.password);
             if (!isMatch) return { message: "Invalid credentials" };
 
-            let responseData: any = {};
+            const signinResponse: SigninResponse = {
+                identity: { id: profile.id, name: profile.name, email: profile.email, role: profile.role },
+                access_token: "",
+            };
 
-            responseData.identity = {};
-            responseData.identity.id = profile.id;
-            responseData.identity.name = profile.name;
-            responseData.identity.email = profile.email;
-            responseData.access_token = App.EncodeJWT(responseData);
+            signinResponse.access_token = App.EncodeJWT(signinResponse);
 
-            return responseData;
+            return signinResponse;
         } catch (error: any) {
             throw error;
         }
