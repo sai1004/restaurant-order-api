@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { AuthService } from "../services/AuthService";
 import { Request, Response } from "express";
+import { Props } from "../utils/Props";
 
 export class AuthController {
     private router: Router = Router();
@@ -29,13 +30,13 @@ export class AuthController {
                 if (reqData) {
                     result = await this.authService.signin(reqData);
 
-                    if (result.access_token) {
+                    if (result?.access_token) {
                         res.status(200).send(result);
                     } else {
-                        res.status(401).send({ status: 0, message: "Invalid Credentials" });
+                        res.status(401).send({ status: 0, message: Props.INVALID_CREDENTIALS });
                     }
                 } else {
-                    res.status(401).send({ status: 0, message: "Invalid Credentials" });
+                    res.status(401).send({ status: 0, message: Props.INVALID_CREDENTIALS });
                 }
             } catch (error: any) {
                 console.log(error);

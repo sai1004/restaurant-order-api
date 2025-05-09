@@ -24,22 +24,22 @@ export class AuthService {
     }
 
     async signin(signinPayload: SigninPayload): Promise<SigninResponse | { status: number; message: string }> {
+        const { email, password } = signinPayload;
         try {
-            let { email, password } = signinPayload;
-            let profile: Profile | null = await this.dao.findOne({ email: email });
-            if (!profile) return { status: 0, message: Props.INVALID_CREDENTIALS };
+            const profile = await this.dao.findOne({ email });
 
-            let isMatch: boolean = App.HashCompareSync(password, profile.password);
-            if (!isMatch) return { status: 0, message: Props.INVALID_CREDENTIALS };
+            if (!profile || !App.HashCompareSync(password, profile.password)) {
+                return { status: 0, message: Props.INVALID_CREDENTIALS };
+            }
 
-            const signinResponse: SigninResponse = {
+            const accessToken = App.EncodeJWT({
                 identity: { id: profile.id, name: profile.name, email: profile.email, role: profile.role },
-                access_token: "",
+            });
+            
+            return {
+                identity: { id: profile.id, name: profile.name, email: profile.email, role: profile.role },
+                access_token: accessToken,
             };
-
-            signinResponse.access_token = App.EncodeJWT(signinResponse);
-
-            return signinResponse;
         } catch (error: any) {
             throw error;
         }
