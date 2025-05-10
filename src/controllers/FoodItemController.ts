@@ -14,7 +14,6 @@ export class FoodItemController {
             try {
                 let reqData = req.body ? req.body : {};
                 let result = null;
-                console.log("reqData", req.body);
                 result = await this.service.save(reqData);
                 res.status(200).send({ status: 1, data: result });
             } catch (error: any) {

@@ -16,8 +16,8 @@ export class FoodCategoryService {
             if (isValid) {
                 let foodCategory = await this.dao.save(data);
                 let returnData = {
-                    id: data.id,
-                    name: data.name,
+                    id: foodCategory?.id,
+                    name: foodCategory?.name,
                     message: Props.SAVED_SUCCESSFULLY,
                 };
                 return returnData;
