@@ -2,6 +2,8 @@ import { Router } from "express";
 import { AuthService } from "../services/AuthService";
 import { Request, Response } from "express";
 import { Props } from "../utils/Props";
+import Logger from "../config/Logger";
+const logger = Logger.getInstance();
 
 export class AuthController {
     private router: Router = Router();
@@ -17,7 +19,7 @@ export class AuthController {
                     res.status(200).send(result);
                 }
             } catch (error: any) {
-                console.log(error);
+                logger.error(error);
                 res.status(500).send({ status: 0, error: error?.message });
             }
         });
@@ -26,10 +28,8 @@ export class AuthController {
             try {
                 let reqData: any = req.body;
                 let result: any = null;
-
                 if (reqData) {
                     result = await this.authService.signin(reqData);
-
                     if (result?.access_token) {
                         res.status(200).send(result);
                     } else {
@@ -39,7 +39,7 @@ export class AuthController {
                     res.status(401).send({ status: 0, message: Props.INVALID_CREDENTIALS });
                 }
             } catch (error: any) {
-                console.log(error);
+                logger.error(error);
                 res.send({ status: 0, error: error?.message });
             }
         });

@@ -2,6 +2,8 @@ import { Router } from "express";
 import { FoodCategoryService } from "../services/FoodCategoryService";
 import { Request, Response } from "express";
 import { App } from "../utils/App";
+import Logger from "../config/Logger";
+const logger = Logger.getInstance();
 
 export class FoodCategoryController {
     private router: Router = Router();
@@ -17,7 +19,7 @@ export class FoodCategoryController {
                 result = await this.service.save(reqData);
                 res.status(200).send({ status: 1, data: result });
             } catch (error: any) {
-                console.log(error);
+                logger.error(error);
                 res.status(500).send({ status: 0, error: error?.message });
             }
         });
@@ -28,7 +30,7 @@ export class FoodCategoryController {
                 result = await this.service.getAllCategories();
                 res.status(200).send({ status: 1, data: result });
             } catch (error: any) {
-                console.log(error);
+                logger.error(error);
                 res.status(500).send({ status: 0, error: error?.message });
             }
         });

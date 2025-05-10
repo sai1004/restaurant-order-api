@@ -11,7 +11,7 @@ export class FoodItemService {
 
     async save(data: FoodItem) {
         try {
-            let isValid = await this.validator(data);
+            let isValid: boolean = await this.validator(data);
 
             if (isValid) {
                 await this.dao.save(data);

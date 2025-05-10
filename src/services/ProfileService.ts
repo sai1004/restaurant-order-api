@@ -13,7 +13,7 @@ export class ProfileService {
 
     async saveProfile(profile: Profile) {
         try {
-            let isValid = await this.validateProfile(profile);
+            let isValid: boolean = await this.validateProfile(profile);
 
             if (isValid) {
                 profile.password = App.HashSync(profile.password);
