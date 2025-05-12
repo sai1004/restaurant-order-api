@@ -18,7 +18,6 @@ export class FoodItemService {
                 let returnData = {
                     id: data?.id,
                     name: data?.name,
-                    message: Props.SAVED_SUCCESSFULLY,
                 };
                 return returnData;
             } else {

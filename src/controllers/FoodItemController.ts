@@ -1,8 +1,11 @@
-import { Router } from "express";
+import { Router, Request, Response  } from "express";
 import { FoodItemService } from "../services/FoodItemService";
-import { Request, Response } from "express";
+import { errorResponse, successResponse } from "../utils/responseFormatter";
+import { Props } from "../utils/Props";
 import { App } from "../utils/App";
+
 import Logger from "../config/Logger";
+
 const logger = Logger.getInstance();
 
 export class FoodItemController {
@@ -15,10 +18,10 @@ export class FoodItemController {
                 let reqData = req.body ? req.body : {};
                 let result = null;
                 result = await this.service.save(reqData);
-                res.status(200).send({ status: 1, data: result });
+                res.status(200).send(successResponse(result, Props.SAVED_SUCCESSFULLY));
             } catch (error: any) {
                 logger.error(error);
-                res.status(500).send({ status: 0, error: error?.message });
+                res.status(error.statusCode).send(errorResponse(error?.message, error?.code, error?.statusCode));
             }
         });
 
@@ -28,10 +31,10 @@ export class FoodItemController {
                 reqData = req.query ? req.query : {};
                 let result = null;
                 result = await this.service.getAllItem(reqData);
-                res.status(200).send({ status: 1, data: result });
+                res.status(200).send(successResponse(result));
             } catch (error: any) {
                 logger.error(error);
-                res.status(500).send({ status: 0, error: error?.message });
+                res.status(error.statusCode).send(errorResponse(error?.message, error?.code, error?.statusCode));
             }
         });
 
@@ -41,10 +44,10 @@ export class FoodItemController {
                 reqData = req.params.id;
                 let result = null;
                 result = await this.service.getItemById(reqData);
-                res.status(200).send({ status: 1, data: result });
+                res.status(200).send(successResponse(result));
             } catch (error: any) {
                 logger.error(error);
-                res.status(500).send({ status: 0, error: error?.message });
+                res.status(error.statusCode).send(errorResponse(error?.message, error?.code, error?.statusCode));
             }
         });
 

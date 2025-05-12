@@ -18,6 +18,7 @@ const swaggerDocument = YAML.load("./swagger.yaml");
 import { FoodItemController } from "./controllers/FoodItemController";
 import { FoodCategoryController } from "./controllers/FoodCategoryController";
 import { AuthController } from "./controllers/AuthController";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
 const logger = Logger.getInstance();
 
@@ -80,6 +81,7 @@ const startServer = async () => {
             app.use("/api/food", foodItemRouter.getRouter());
             app.use("/api/food", foodCategoryRouter.getRouter());
             app.use("/api/auth", authControllerRouter.getRouter());
+            app.use(globalErrorHandler);
 
             const server: Server = app.listen(PORT, () => {
                 logger.info(`🚀 Server running at http://localhost:${PORT}/api`);

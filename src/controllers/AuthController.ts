@@ -1,8 +1,9 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { AuthService } from "../services/AuthService";
-import { Request, Response } from "express";
+import { errorResponse, successResponse } from "../utils/responseFormatter";
 import { Props } from "../utils/Props";
 import Logger from "../config/Logger";
+
 const logger = Logger.getInstance();
 
 export class AuthController {
@@ -16,11 +17,11 @@ export class AuthController {
                 let result = null;
                 result = await this.authService.signup(reqData);
                 if (result?.id) {
-                    res.status(200).send(result);
+                    res.status(200).send(successResponse(result, Props.SAVED_SUCCESSFULLY));
                 }
             } catch (error: any) {
                 logger.error(error);
-                res.status(500).send({ status: 0, error: error?.message });
+                res.status(error.statusCode).send(errorResponse(error?.message, error?.code, error?.statusCode));
             }
         });
 
@@ -40,7 +41,7 @@ export class AuthController {
                 }
             } catch (error: any) {
                 logger.error(error);
-                res.send({ status: 0, error: error?.message });
+                res.status(error.statusCode).send(errorResponse(error?.message, error?.code, error?.statusCode));
             }
         });
 

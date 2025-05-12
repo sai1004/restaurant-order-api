@@ -18,7 +18,6 @@ export class FoodCategoryService {
                 let returnData = {
                     id: foodCategory?.id,
                     name: foodCategory?.name,
-                    message: Props.SAVED_SUCCESSFULLY,
                 };
                 return returnData;
             } else {
