@@ -1,10 +1,27 @@
-# How to implement CICD with Github -> Jenkins -> docker -> EC2 
+# Security
 
+ <h5> Implemented </h5>
 
-Step 1: 
+-   Authentication
+-   CORS
+-   Security headers
+-   XSS Protection
+-   Loggers
+-   Error handling (Avoid internal stack trace)
 
-step 2:
+ <h5> Yet to implement </h5>
 
-step 3:
+-   Authorization
+-   Rate limit → DDoS protection
+-   SSRF (Server-side request forgery)
+-   Encryption (SSL/TLS)
+-   API Gateway
+-   WAF (Web application firewall)
+-   AWS Shield - Firewall
+-   Dependency vulnerabilities scan
 
-step 4:
+# CICD
+
+- Dockerfile
+- docker-compose.yml
+- Jenkins Pipeline

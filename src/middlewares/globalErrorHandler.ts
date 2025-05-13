@@ -1,4 +1,4 @@
-import { ErrorCodes } from "../constants/errorCodes";
+import { ErrorCodes } from "../constants/ErrorCodes";
 import { AppError } from "../utils/AppError";
 import { errorResponse } from "../utils/responseFormatter";
 

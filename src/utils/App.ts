@@ -37,7 +37,7 @@ export class App {
         }
         str = str.replace(App.NON_ALPHA_NUMARIC, "_");
         str = str.replace(/\s/g, "_");
-        str = str.substr(0, 128);
+        str = str.slice(0, 128);
         return str.toUpperCase();
     }
 

@@ -1,4 +1,4 @@
-import { ErrorCodes } from "../constants/errorCodes";
+import { ErrorCodes } from "../constants/ErrorCodes";
 import { ProfileDAO } from "../daos/ProfileDAO";
 import { Profile } from "../entities/Profile";
 import { App } from "../utils/App";
@@ -36,13 +36,13 @@ export class ProfileService {
 
             if (oldProfile.length > 0) {
                 throw new AppError(Props.EMAIL_EXISTS, ErrorCodes.VALIDATION.DUPLICATE_RECORD, 409);
-            } else {
-                let uniqueId: string = App.UniqueCode();
-                profile.id = uniqueId;
-                profile.role = "staff";
-                profile.updatedOn = new Date();
-                return true;
             }
+
+            let uniqueId: string = App.UniqueCode();
+            profile.id = uniqueId;
+            profile.role = "staff";
+            profile.updatedOn = new Date();
+            return true;
         } catch (error: any) {
             throw error;
         }
