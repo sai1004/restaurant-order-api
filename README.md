@@ -25,11 +25,24 @@
 
 # CICD
 
+<p> Scan Code Base</p>
+
+-   Sonarcube
+
+<p>Build</p>
+
 -   Dockerfile
 -   docker-compose.yml
+
+<p> Scan Docker Images </p>
+
+-   Trivy
+
+<p>Automate All Deployment process</p>
+
 -   Jenkins Pipeline
 
- <h5> Yet to implement </h5>
+<p> Containers Orchestration </p>
 
 -   Kubernetes
 
@@ -39,3 +52,8 @@
 -   VPC
 -   Subnets
 -   Load Balance
+-   Monitor Logs
+
+# NodeJs API
+
+-   Food Item Save Image -> [upload / retrive image -> S3 Bucket]
