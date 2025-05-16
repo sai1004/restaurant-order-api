@@ -18,7 +18,7 @@ export class FoodCategoryController {
                 let reqData = req.body ? req.body : {};
                 let result = null;
                 result = await this.service.save(reqData);
-                res.status(200).send(successResponse(result, Props.SAVED_SUCCESSFULLY));
+                res.status(200).send(successResponse(result, Props.STATUS_MESSAGES.SAVED_SUCCESSFULLY));
             } catch (error: any) {
                 logger.error(error);
                 res.status(error.statusCode).send(errorResponse(error?.message, error?.code, error?.statusCode));

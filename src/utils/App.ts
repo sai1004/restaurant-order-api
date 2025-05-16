@@ -2,6 +2,8 @@ import { hashSync, compareSync } from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import * as Config from "../config/Config";
 import { Props } from "./Props";
+import nodemailer from "nodemailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export class App {
     private static uniqueId: number = 0;
@@ -81,13 +83,34 @@ export class App {
 
     public static verifyToken(req: any, res: any, next: any) {
         const token = req.header("Authorization")?.split(" ")[1];
-        if (!token) return res.status(401).json({ status: 0, message: Props.NO_TOKEN_MESSAGE });
+        if (!token) return res.status(401).json({ status: 0, message: Props.ERROR_MESSAGES.NO_TOKEN });
         try {
             const decoded = jwt.verify(token, Config.token);
             req.user = decoded;
             next();
         } catch {
-            res.status(401).json({ status: 0, message: Props.INVALID_TOKEN });
+            res.status(401).json({ status: 0, message: Props.ERROR_MESSAGES.INVALID_TOKEN });
         }
     }
+
+    public static sendEmail = async (to: string, subject: string, html: string) => {
+        const transportOptions: SMTPTransport.Options = {
+            host: process.env.EMAIL_HOST,
+            port: Number(process.env.EMAIL_PORT),
+            secure: false,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        };
+
+        const transporter = nodemailer.createTransport(transportOptions);
+
+        await transporter.sendMail({
+            from: `${Props.APP_NAME} <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html,
+        });
+    };
 }

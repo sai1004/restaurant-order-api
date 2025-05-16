@@ -30,17 +30,34 @@ export class ProfileService {
         }
     }
 
+    async updateProfile(profile: Profile) {
+        try {
+            let oldProfile = await this.dao.search({ email: profile.email });
+
+            if (oldProfile.length > 0) {
+                let newProfile: any = await this.dao.save(profile);
+                return {
+                    id: newProfile.id,
+                };
+            } else {
+                // record does not exists
+            }
+        } catch (error: any) {
+            throw error;
+        }
+    }
+
     async validateProfile(profile: Profile) {
         try {
             let oldProfile = await this.dao.search({ email: profile.email });
 
             if (oldProfile.length > 0) {
-                throw new AppError(Props.EMAIL_EXISTS, ErrorCodes.VALIDATION.DUPLICATE_RECORD, 409);
+                throw new AppError(Props.ERROR_MESSAGES.EMAIL_EXISTS, ErrorCodes.VALIDATION.DUPLICATE_RECORD, 409);
             }
 
             let uniqueId: string = App.UniqueCode();
             profile.id = uniqueId;
-            profile.role = "staff";
+            profile.role = Props.PROFILE_ROLE.STAFF;
             profile.updatedOn = new Date();
             return true;
         } catch (error: any) {

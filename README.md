@@ -27,7 +27,7 @@
 
 <p> Scan Code Base</p>
 
--   Sonarcube
+-   Sonarcube (SAST)
 
 <p>Build</p>
 
