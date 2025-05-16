@@ -3,7 +3,7 @@ import { ProfileDAO } from "../daos/ProfileDAO";
 import { Profile } from "../entities/Profile";
 import { App } from "../utils/App";
 import { AppError } from "../utils/AppError";
-import { Props } from "../utils/Props";
+import { Props } from "../constants/Props";
 
 export class ProfileService {
     uniqueId: number = 0;

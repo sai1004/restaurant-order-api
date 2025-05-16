@@ -1,6 +1,6 @@
 import { FoodItemDAO } from "../daos/FoodItemDAO";
 import { FoodItem } from "../entities/FoodItem";
-import { Props } from "../utils/Props";
+import { Props } from "../constants/Props";
 
 export class FoodItemService {
     private dao: FoodItemDAO;

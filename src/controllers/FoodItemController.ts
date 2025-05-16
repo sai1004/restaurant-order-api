@@ -1,7 +1,7 @@
 import { Router, Request, Response  } from "express";
 import { FoodItemService } from "../services/FoodItemService";
 import { errorResponse, successResponse } from "../utils/responseFormatter";
-import { Props } from "../utils/Props";
+import { Props } from "../constants/Props";
 import { App } from "../utils/App";
 
 import Logger from "../config/Logger";

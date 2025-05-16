@@ -83,4 +83,65 @@ export class Props {
         STAFF: "STAFF",
         ADMIN: "ADMIN",
     };
+
+    public static VALIDATION = {
+        REQUIRED_FIELD_MISSING: "Required field is missing.",
+        INVALID_FORMAT: "The input format is invalid.",
+        VALUE_OUT_OF_RANGE: "The value is out of the acceptable range.",
+        DUPLICATE_RECORD: "A record with similar details already exists.",
+        UNSUPPORTED_FILE_TYPE: "The uploaded file type is not supported.",
+        INVALID_DATE: "The provided date is invalid or incorrectly formatted.",
+        MISSING_HEADERS: "Required request headers are missing.",
+        INVALID_LENGTH: "Input length is invalid or exceeds allowed limit.",
+    };
+
+    public static AUTH = {
+        UNAUTHORIZED: "You are not authorized to perform this action.",
+        TOKEN_EXPIRED: "Your session has expired. Please log in again.",
+        TOKEN_INVALID: "The authentication token is invalid.",
+        ACCESS_DENIED: "Access denied. You do not have the required permissions.",
+        MULTI_FACTOR_REQUIRED: "Multi-factor authentication is required.",
+        SESSION_EXPIRED: "Your session has expired. Please sign in again.",
+        SUSPICIOUS_ACTIVITY: "Suspicious activity detected. Please verify your identity.",
+    };
+
+    public static DB = {
+        CONNECTION_FAILED: "Failed to connect to the database.",
+        QUERY_FAILED: "An error occurred while executing the database query.",
+        SAVE_FAILED: "Unable to save data to the database.",
+        RECORD_LOCKED: "The record is currently locked and cannot be modified.",
+        TIMEOUT: "Database operation timed out.",
+        TRANSACTION_ROLLBACK: "Transaction failed and has been rolled back.",
+        DEADLOCK_DETECTED: "Database deadlock detected. Please try again.",
+    };
+
+    public static PAYMENT = {
+        CARD_DECLINED: "Your card was declined by the bank.",
+        INSUFFICIENT_FUNDS: "Insufficient funds in the account.",
+        INVALID_ACCOUNT: "Invalid payment account details provided.",
+        GATEWAY_TIMEOUT: "Payment gateway timed out. Please try again.",
+        FRAUD_DETECTED: "Potential fraudulent activity detected. Payment blocked.",
+        LIMIT_EXCEEDED: "Transaction limit exceeded. Please try a smaller amount.",
+    };
+
+    public static RATE_LIMIT = {
+        TOO_MANY_REQUESTS: "Too many requests. Please slow down and try again later.",
+        BLOCKED_IP: "Access from this IP address has been temporarily blocked.",
+        ABUSE_DETECTED: "Abusive behavior detected. Access restricted.",
+    };
+
+    public static FILE = {
+        UPLOAD_FAILED: "File upload failed. Please try again.",
+        FILE_TOO_LARGE: "The uploaded file exceeds the maximum allowed size.",
+        VIRUS_DETECTED: "The uploaded file contains a virus and was rejected.",
+        STORAGE_FULL: "File storage is full. Cannot upload at this time.",
+    };
+
+    public static GENERAL = {
+        UNKNOWN_ERROR: "An unknown error occurred. Please try again later.",
+        SERVICE_UNAVAILABLE: "The service is temporarily unavailable. Please try again later.",
+        NOT_FOUND: "The requested resource could not be found.",
+        OPERATION_NOT_ALLOWED: "This operation is not allowed.",
+        FEATURE_DISABLED: "This feature is currently disabled.",
+    };
 }

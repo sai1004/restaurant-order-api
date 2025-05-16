@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { AuthService } from "../services/AuthService";
 import { errorResponse, successResponse } from "../utils/responseFormatter";
-import { Props } from "../utils/Props";
+import { Props } from "../constants/Props";
 import Logger from "../config/Logger";
 
 const logger = Logger.getInstance();

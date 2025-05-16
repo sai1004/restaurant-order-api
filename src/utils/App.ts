@@ -1,7 +1,7 @@
 import { hashSync, compareSync } from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import * as Config from "../config/Config";
-import { Props } from "./Props";
+import { Props } from "../constants/Props";
 import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 

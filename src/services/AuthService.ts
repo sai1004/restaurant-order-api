@@ -2,7 +2,7 @@ import { ProfileDAO } from "../daos/ProfileDAO";
 import { Profile } from "../entities/Profile";
 import { SigninPayload, SigninResponse } from "../types/Auth";
 import { App } from "../utils/App";
-import { Props } from "../utils/Props";
+import { Props } from "../constants/Props";
 import { ProfileService } from "./ProfileService";
 import crypto from "crypto";
 
