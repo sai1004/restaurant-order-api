@@ -27,8 +27,7 @@ export class FoodItemController {
 
         this.router.get("/items", App.verifyToken, async (req: Request, res: Response) => {
             try {
-                let reqData: any;
-                reqData = req.query ? req.query : {};
+                let reqData: any = req.query ? req.query : {};
                 let result = null;
                 result = await this.service.getAllItem(reqData);
                 res.status(200).send(successResponse(result));

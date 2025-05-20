@@ -23,6 +23,8 @@ export class ProfileService {
                 let newProfile: any = await this.dao.save(profile);
                 return {
                     id: newProfile.id,
+                    status: 1,
+                    message: Props.STATUS_MESSAGES.SAVED_SUCCESSFULLY,
                 };
             }
         } catch (error: any) {
@@ -38,10 +40,11 @@ export class ProfileService {
                 let newProfile: any = await this.dao.save(profile);
                 return {
                     id: newProfile.id,
+                    status: 1,
+                    message: Props.STATUS_MESSAGES.UPDATED_SUCCESSFULLY,
                 };
-            } else {
-                // record does not exists
             }
+            throw new AppError(Props.ERROR_MESSAGES.PROFILE_NOT_FOUND, ErrorCodes.GENERAL.NOT_FOUND, 404);
         } catch (error: any) {
             throw error;
         }

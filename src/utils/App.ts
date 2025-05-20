@@ -94,23 +94,27 @@ export class App {
     }
 
     public static sendEmail = async (to: string, subject: string, html: string) => {
-        const transportOptions: SMTPTransport.Options = {
-            host: process.env.EMAIL_HOST,
-            port: Number(process.env.EMAIL_PORT),
-            secure: false,
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        };
+        try {
+            const transportOptions: SMTPTransport.Options = {
+                host: process.env.EMAIL_HOST,
+                port: Number(process.env.EMAIL_PORT),
+                secure: false,
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASS,
+                },
+            };
 
-        const transporter = nodemailer.createTransport(transportOptions);
+            const transporter = nodemailer.createTransport(transportOptions);
 
-        await transporter.sendMail({
-            from: `${Props.APP_NAME} <${process.env.EMAIL_USER}>`,
-            to,
-            subject,
-            html,
-        });
+            await transporter.sendMail({
+                from: `${Props.APP_NAME} <${process.env.EMAIL_USER}>`,
+                to,
+                subject,
+                html,
+            });
+        } catch (error: any) {
+            throw error;
+        }
     };
 }

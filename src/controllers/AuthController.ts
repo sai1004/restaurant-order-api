@@ -80,10 +80,10 @@ export class AuthController {
         });
 
         /*  Frontend Flow (Summary)
-        /forgot-password form with email field
-        Email contains link: http://yourapp.com/reset-password/:token
-        /reset-password/:token form with new password field
-    */
+            /forgot-password form with email field
+            Email contains link: http://yourapp.com/reset-password/:token
+            /reset-password/:token form with new password field
+        */
         return this.router;
     }
 }

@@ -46,7 +46,7 @@ export class AuthService {
         }
     }
 
-    async sendResetPasswordEmail(email: string) {
+    async sendResetPasswordEmail(email: string): Promise<{ status: number; message: string }> {
         try {
             const profile = await this.dao.findOne({ email });
             if (!profile) return { status: 0, message: Props.ERROR_MESSAGES.PROFILE_NOT_FOUND };
@@ -77,13 +77,13 @@ export class AuthService {
         }
     }
 
-    async resetPasswordWithToken(token: string, newPassword: string) {
+    async resetPasswordWithToken(token: string, newPassword: string): Promise<{ status: number; message: string }> {
         try {
-            // const user = await User.findOne({
+            // await User.findOne({
             //     resetToken: token,
             //     resetTokenExpiry: { $gt: Date.now() }, // token still valid
             // });
-
+            // check current password as well
             const profile = await this.dao.findOne({ token });
 
             if (!profile) return { status: 0, message: "Invalid or expired token" };
@@ -97,5 +97,8 @@ export class AuthService {
         } catch (error: any) {
             throw error;
         }
+
+        // Important: If using Gmail, you must create an App Password from your Google
+        // Account settings (under Security → App passwords) instead of your real password.
     }
 }
